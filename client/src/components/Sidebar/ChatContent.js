@@ -1,4 +1,5 @@
 import React from "react";
+import { connect } from "react-redux";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
 
@@ -22,9 +23,7 @@ const useStyles = makeStyles((theme) => ({
 
 const ChatContent = (props) => {
   const classes = useStyles();
-
-  const { conversation } = props;
-  const { latestMessageText, otherUser } = conversation;
+  const { latestMessageText, otherUser } = props;
 
   return (
     <Box className={classes.root}>
@@ -40,4 +39,12 @@ const ChatContent = (props) => {
   );
 };
 
-export default ChatContent;
+const mapStateToProps = (state, ownProps) => {
+  return({
+    otherUser: ownProps.conversation.otherUser,
+    latestMessageText: ownProps.conversation.latestMessageText
+  })
+
+}
+
+export default connect(mapStateToProps, null)(ChatContent);
