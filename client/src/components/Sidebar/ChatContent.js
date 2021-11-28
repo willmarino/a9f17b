@@ -23,7 +23,8 @@ const useStyles = makeStyles((theme) => ({
 
 const ChatContent = (props) => {
   const classes = useStyles();
-  const { latestMessageText, otherUser } = props;
+  const { conversation } = props;
+  const { latestMessageText, otherUser } = conversation;
 
   return (
     <Box className={classes.root}>
@@ -39,12 +40,4 @@ const ChatContent = (props) => {
   );
 };
 
-const mapStateToProps = (state, ownProps) => {
-  return({
-    otherUser: ownProps.conversation.otherUser,
-    latestMessageText: ownProps.conversation.latestMessageText
-  })
-
-}
-
-export default connect(mapStateToProps, null)(ChatContent);
+export default ChatContent;
