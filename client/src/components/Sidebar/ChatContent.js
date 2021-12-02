@@ -22,7 +22,6 @@ const useStyles = makeStyles((theme) => ({
 
 const ChatContent = (props) => {
   const classes = useStyles();
-
   const { conversation } = props;
   const { latestMessageText, otherUser } = conversation;
 
