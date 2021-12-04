@@ -115,9 +115,19 @@ export const readMessages = (conversationId, messageIds) => async (dispatch) => 
   try{
     await axios.post("/api/messages/read_messages", { messageIds });
     dispatch(updateReadMessages(conversationId, messageIds));
+    sendReadMessages(conversationId, messageIds);
   }catch (error){
     console.error(error);
   }
+}
+
+// Let the socket.io server know that this user read certain messages,
+// so that this fact can be broadcasted in real time to the other user in the conversation
+const sendReadMessages = (conversationId, messageIds) => {
+  socket.emit("read-messages", {
+    conversationId,
+    messageIds
+  })
 }
 
 export const searchUsers = (searchTerm) => async (dispatch) => {

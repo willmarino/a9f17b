@@ -29,11 +29,11 @@ const ActiveChat = (props) => {
   // When conversation object changes:
   // Check for presence of conversation.messages to ensure conversation has been fetched
   // Iterate through messages, select the ones which were not sent or read by the current user
-  // If any exist, send them to the backend and then update redux state
+  // If any exist, call readMessages, passing the convo id and unread message ids
   useEffect( () => {
     if(conversation.messages){
       const unreadMessageIds = conversation.messages
-        .filter(msg => (!msg.readByReceiver && msg.senderId !== user.id))
+        .filter(msg => (!msg.readByReceiver && (msg.senderId !== user.id)))
         .map(msg => msg.id);
       if(unreadMessageIds.length !== 0){
         readMessages( conversation.id, unreadMessageIds);
