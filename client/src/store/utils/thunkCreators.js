@@ -5,6 +5,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  updateReadMessages
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -91,6 +92,7 @@ const sendMessage = (data, body) => {
   });
 };
 
+
 // message format to send: {recipientId, text, conversationId}
 // conversationId will be set to null if its a brand new conversation
 export const postMessage = (body) => async (dispatch) => {
@@ -108,6 +110,15 @@ export const postMessage = (body) => async (dispatch) => {
     console.error(error);
   }
 };
+
+export const readMessages = (conversationId, messageIds) => async (dispatch) => {
+  try{
+    await axios.post("/api/messages/read_messages", { messageIds });
+    dispatch(updateReadMessages(conversationId, messageIds));
+  }catch (error){
+    console.error(error);
+  }
+}
 
 export const searchUsers = (searchTerm) => async (dispatch) => {
   try {
