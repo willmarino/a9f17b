@@ -19,34 +19,26 @@ const useStyles = makeStyles((theme) => ({
     color: "#9CADC8",
     letterSpacing: -0.17,
   },
-  unreadPreviewText: {
-    fontSize: 12,
-    letterSpacing: -0.17,
+  unreadText: {
     fontWeight: "bold",
     color: "black",
   },
-  // box which contains number of unread messages
-  counter: {
+  box: {
     width: 30,
     height: 20,
-    backgroundImage: "linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)",
-    borderRadius: "10px",
+    marginRight: 20,
     display: "flex",
     justifyContent: "center",
     alignItems: "center",
-    marginRight: 20,
+    borderRadius: "10px",
   },
-  // placeholder shown if all messages are read, same dimensions as counter
-  empty: {
-    width: 30,
-    height: 20,
-    marginRight: 20,
+  counter: {
+    backgroundImage: "linear-gradient(225deg, #6CC1FF 0%, #3A8DFF 100%)",
   },
   numberText: {
     fontSize: 14,
     fontWeight: "bold",
-    color: "#FFFFFF",
-    letterSpacing: -0.2,
+    color: "white",
   }
 }));
 
@@ -77,14 +69,14 @@ const ChatContent = (props) => {
   // display the number of unread messages in a Box
   // Else, display a placeholder box
   let unreadMessageCounter = (noUnreadMessages)
-    ? (<Box className={classes.empty}></Box>)
-    : (<Box className={classes.counter}>
+    ? (<Box className={classes.box}></Box>)
+    : (<Box className={`${classes.box} ${classes.counter}`}>
         <Typography className={classes.numberText}>{numUnreadMessages}</Typography>
       </Box>);
 
   const textClassName = (noUnreadMessages)
     ? classes.previewText
-    : classes.unreadPreviewText;
+    : `${classes.previewText} ${classes.unreadText}`;
 
   return (
     <Box className={classes.root}>
