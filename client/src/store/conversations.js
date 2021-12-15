@@ -69,7 +69,7 @@ export const addConversation = (recipientId, newMessage) => {
   };
 };
 
-// change message.readByReceiver attribute for all messages when user views messages for first time
+// change message.read attribute for all messages when user views messages for first time
 export const updateReadMessages = (conversationId, messageIds) => {
   return {
     type: READ_MESSAGES,

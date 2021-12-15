@@ -6,13 +6,11 @@ import moment from "moment";
 const Messages = (props) => {
   const { messages, otherUser, userId } = props;
 
-  // Finds last read message in constant time:
-  // time complexity is based off number of unread messages, not number of total messages in conversation
   let lastReadMessage = null;
   if(messages.length !== 0){
     for(let i = messages.length - 1; i >= 0; i--){
       const curMessage = messages[i];
-      if(curMessage.readByReceiver && (curMessage.senderId === userId)){
+      if(curMessage.read && (curMessage.senderId === userId)){
         lastReadMessage = curMessage;
         break;
       }

@@ -57,17 +57,14 @@ const ChatContent = (props) => {
 
   const currentlyViewingConversation = Boolean(activeConversation === conversation.otherUser.username);
 
-  // Same as in Messages component, has constant, not linear, time complexity
-  // latestReceivedMessageUnread controls whether the message text preview is bolded
-  // numUnreadMessages controls the number displayed for unread messages
   let latestReceivedMessageUnread = false;
   let numUnreadMessages = 0;
   if(messages.length !== 0){
     for(let i = messages.length - 1; i >= 0; i--){
       const curMessage = messages[i];
-      if(curMessage.readByReceiver && (curMessage.senderId === otherUser.id)){
+      if(curMessage.read && (curMessage.senderId === otherUser.id)){
         break;
-      }else if(!curMessage.readByReceiver && (curMessage.senderId === otherUser.id)){
+      }else if(!curMessage.read && (curMessage.senderId === otherUser.id)){
         if(!latestReceivedMessageUnread) latestReceivedMessageUnread = true;
         numUnreadMessages += 1;
       }

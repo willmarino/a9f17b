@@ -45,15 +45,15 @@ router.post("/", async (req, res, next) => {
 });
 
 
-router.post("/read_messages", async (req, res, next) => {
+router.patch("/read_messages", async (req, res, next) => {
   try {
     if (!req.user) {
       return res.sendStatus(401);
     }
     
-    const messages = await Message.update(
+    await Message.update(
       {
-        readByReceiver: true
+        read: true
       },
       {
         where:{
@@ -64,7 +64,7 @@ router.post("/read_messages", async (req, res, next) => {
       }
     );
 
-    res.json({ messages });
+    res.sendStatus(204);
   }catch (error){
     next(error);
   }
