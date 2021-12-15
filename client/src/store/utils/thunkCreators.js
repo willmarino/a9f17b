@@ -113,7 +113,7 @@ export const postMessage = (body) => async (dispatch) => {
 
 export const readMessages = (conversationId, messageIds) => async (dispatch) => {
   try{
-    await axios.patch("/api/messages/read_messages", { messageIds });
+    await axios.patch("/api/messages/read_messages", { messageIds, conversationId });
     dispatch(updateReadMessages(conversationId, messageIds));
     sendReadMessages(conversationId, messageIds);
   }catch (error){

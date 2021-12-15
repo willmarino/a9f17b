@@ -50,6 +50,17 @@ router.patch("/read_messages", async (req, res, next) => {
     if (!req.user) {
       return res.sendStatus(401);
     }
+
+    const convo = await Conversation.findOne({
+      where: {
+        id: req.body.conversationId
+      }
+    });
+
+    const userIsPartOfConversation = Boolean(convo.user1Id === req.user.id || convo.user2Id === req.user.id);
+    if(!userIsPartOfConversation){
+      return res.sendStatus(401);
+    }
     
     await Message.update(
       {
