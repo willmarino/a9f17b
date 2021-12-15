@@ -1,6 +1,7 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
+import { scanMessages } from "../../util/util_messages";
 
 const useStyles = makeStyles((theme) => ({
   root: {
@@ -57,32 +58,34 @@ const ChatContent = (props) => {
 
   const currentlyViewingConversation = Boolean(activeConversation === conversation.otherUser.username);
 
-  let latestReceivedMessageUnread = false;
   let numUnreadMessages = 0;
   if(messages.length !== 0){
     for(let i = messages.length - 1; i >= 0; i--){
       const curMessage = messages[i];
-      if(curMessage.read && (curMessage.senderId === otherUser.id)){
-        break;
-      }else if(!curMessage.read && (curMessage.senderId === otherUser.id)){
-        if(!latestReceivedMessageUnread) latestReceivedMessageUnread = true;
-        numUnreadMessages += 1;
+      if(curMessage.senderId === otherUser.id){
+        if(curMessage.read){
+          break;
+        }else{
+          numUnreadMessages += 1;
+        }
       }
     }
   }
 
+  const noUnreadMessages = Boolean(numUnreadMessages === 0 || currentlyViewingConversation);
+
   // If there are any unread messages and the conversation is not being viewed currently,
   // display the number of unread messages in a Box
   // Else, display a placeholder box
-  let unreadMessageCounter = (numUnreadMessages === 0 || currentlyViewingConversation)
+  let unreadMessageCounter = (noUnreadMessages)
     ? (<Box className={classes.empty}></Box>)
     : (<Box className={classes.counter}>
         <Typography className={classes.numberText}>{numUnreadMessages}</Typography>
       </Box>);
 
-  const textClassName = (latestReceivedMessageUnread && !currentlyViewingConversation)
-    ? classes.unreadPreviewText
-    : classes.previewText;
+  const textClassName = (noUnreadMessages)
+    ? classes.previewText
+    : classes.unreadPreviewText;
 
   return (
     <Box className={classes.root}>
