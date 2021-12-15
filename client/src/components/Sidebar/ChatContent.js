@@ -1,7 +1,6 @@
 import React from "react";
 import { Box, Typography } from "@material-ui/core";
 import { makeStyles } from "@material-ui/core/styles";
-import { scanMessages } from "../../util/util_messages";
 
 const useStyles = makeStyles((theme) => ({
   root: {
