@@ -5,6 +5,7 @@ import {
   addConversation,
   setNewMessage,
   setSearchedUsers,
+  updateReadMessages
 } from "../conversations";
 import { gotUser, setFetchingStatus } from "../user";
 
@@ -91,6 +92,7 @@ const sendMessage = (data, body) => {
   });
 };
 
+
 // message format to send: {recipientId, text, conversationId}
 // conversationId will be set to null if its a brand new conversation
 export const postMessage = (body) => async (dispatch) => {
@@ -108,6 +110,25 @@ export const postMessage = (body) => async (dispatch) => {
     console.error(error);
   }
 };
+
+export const readMessages = (conversationId, messageIds) => async (dispatch) => {
+  try{
+    await axios.patch("/api/messages/read_messages", { messageIds, conversationId });
+    dispatch(updateReadMessages(conversationId, messageIds));
+    sendReadMessages(conversationId, messageIds);
+  }catch (error){
+    console.error(error);
+  }
+}
+
+// Let the socket.io server know that this user read certain messages,
+// so that this fact can be broadcasted in real time to the other user in the conversation
+const sendReadMessages = (conversationId, messageIds) => {
+  socket.emit("read-messages", {
+    conversationId,
+    messageIds
+  })
+}
 
 export const searchUsers = (searchTerm) => async (dispatch) => {
   try {

@@ -80,3 +80,24 @@ export const addNewConvoToStore = (state, recipientId, message) => {
     }
   });
 };
+
+// Where conversationId is the id of the conversation which has just been viewed,
+// and messageIds are the messages which has just been read,
+// set the read attribute to true
+export const updateMessagesReadStatus = (state, payload) => {
+  const { conversationId, messageIds } = payload;
+  return state.map((convo) => {
+    if(convo.id === conversationId){
+      const convoCopy = { ...convo };
+      convoCopy.messages.forEach((msg) => {
+        if(messageIds.includes(msg.id)){
+          msg.read = true;
+        }
+      })
+      return convoCopy;
+    }else{
+      return convo;
+    }
+  })
+
+}
