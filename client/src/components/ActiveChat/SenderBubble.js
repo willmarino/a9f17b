@@ -39,23 +39,17 @@ const SenderBubble = (props) => {
   const { time, text, isLastReadMessage, otherUser } = props;
   const { username, photoUrl } = otherUser;
 
-  const miniAvatar = (isLastReadMessage)
-    ? (
-      <Box className={classes.profilePicContainer}>
-        <Avatar alt={username} src={photoUrl} className={classes.profilePic}/>
-      </Box>
-    )
-    : null;
-
-
-
   return (
     <Box className={classes.root}>
       <Typography className={classes.date}>{time}</Typography>
       <Box className={classes.bubble}>
         <Typography className={classes.text}>{text}</Typography>
       </Box>
-      {miniAvatar}
+      {isLastReadMessage &&
+        <Box className={classes.profilePicContainer}>
+          <Avatar alt={username} src={photoUrl} className={classes.profilePic}/>
+        </Box>
+      }
     </Box>
   );
 };
