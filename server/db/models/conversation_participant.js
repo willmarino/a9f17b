@@ -1,4 +1,5 @@
 const db = require("../db");
+const Sequelize = require("sequelize");
 
 const ConversationParticipant = db.define("conversationParticipant", {
   conversationId: {

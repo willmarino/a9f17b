@@ -6,8 +6,10 @@ const MessageReading = require("./message_reading");
 
 // associations
 
+// deprecated
 Conversation.belongsTo(User, { as: "user1" });
 Conversation.belongsTo(User, { as: "user2" });
+// 
 
 User.hasMany(ConversationParticipant);
 Conversation.hasMany(ConversationParticipant);
